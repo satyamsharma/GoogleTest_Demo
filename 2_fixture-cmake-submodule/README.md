@@ -7,7 +7,7 @@
 # traditionally, it is either 'third-party' or 'external'
 mkdir third-party
 cd third-party
-git submodule add git@github.com:google/googletest.git
+git submodule add -f git@github.com:google/googletest.git googletest
 ```
 
 ## Building using CMake
