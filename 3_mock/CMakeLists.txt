@@ -16,7 +16,6 @@ add_library(InflationTracker InflationTracker.cpp)
 
 # create InflationTracker_test
 add_executable(InflationTracker_test InflationTracker_test.cpp)
-
 target_link_libraries(
     InflationTracker_test
     InflationTracker
@@ -24,4 +23,12 @@ target_link_libraries(
     gtest
     gmock
     pthread
+)
+
+# create client driver
+add_executable(ClientMain main.cpp)
+target_link_libraries(
+    ClientMain
+    InflationTracker
+    PriceDatabaseAPI
 )
