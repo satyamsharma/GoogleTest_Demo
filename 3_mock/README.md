@@ -26,14 +26,19 @@ make
 
 ## Running client code
 
+This code is useless, but it helps appreciate the need for mock testing
+
 ```sh
 # run the generated executable
 ./ClientMain
 ```
 
-## Run test
+## Run Mock tests
 
 ```sh
-# same as before
 ./InflationTracker_test
 ```
+
+For a future quick refernce refer to: <https://google.github.io/googletest/gmock_cheat_sheet.html>
+
+For a more detailed refernce: <https://google.github.io/googletest/gmock_for_dummies.html>
