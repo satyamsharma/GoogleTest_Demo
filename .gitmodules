@@ -1,3 +1,6 @@
 [submodule "2_fixture-cmake-submodule/third-party/googletest"]
 	path = 2_fixture-cmake-submodule/third-party/googletest
 	url = git@github.com:google/googletest.git
+[submodule "3_mock/third-party/googletest"]
+	path = 3_mock/third-party/googletest
+	url = git@github.com:google/googletest.git
