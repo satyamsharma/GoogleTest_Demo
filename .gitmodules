@@ -1,3 +1,3 @@
-[submodule "1_fixture-cmake-submodule/third-party"]
-	path = 1_fixture-cmake-submodule/third-party
+[submodule "2_fixture-cmake-submodule/third-party"]
+	path = 2_fixture-cmake-submodule/third-party
 	url = git@github.com:google/googletest.git
