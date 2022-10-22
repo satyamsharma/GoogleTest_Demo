@@ -58,7 +58,7 @@ We create `MockPriceDatabaseAPI` (derived from `PriceDatabaseAPI`) and override 
 
 NOTE: The functions that need to be mocked must be polymorphic and therefore be marked `virtual` for all of this to work!
 
-The mock tests, allow us to profile the mocked functions and realize the *Caller's* (`InflationTracke`) behavior : how many times it was called? what were its arguments? how did process the return value? etc
+The mock tests, allow us to profile the mocked functions and realize the *Caller's* (`InflationTracke`) behavior : how many times it was called? what were its arguments? what to have as the return value? etc
 
 ```sh
 ./InflationTracker_test
