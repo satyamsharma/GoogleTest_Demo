@@ -4,6 +4,14 @@
 #include "PriceDatabaseAPI.h"
 #include "InflationTracker.h"
 
+// Two ways to enforce ordering
+using ::testing::InSequence; // for a single linear ordering
+
+// using ::testing::Sequence; // for a more flexible ordering
+                              // e.g. a group calls are expected to be
+                              // after a certain call, but the calls within the
+                              // group can be in an aribitrary ordering
+
 class MockPriceDatabaseAPI : public PriceDatabaseAPI
 {
 public:
@@ -18,7 +26,9 @@ public:
 
 TEST(TestConnection, TestConnection)
 {
+   InSequence s;
    MockPriceDatabaseAPI api = MockPriceDatabaseAPI("172.0.0.1", "5000");
+
    EXPECT_CALL(api, connect());
    EXPECT_CALL(api, disconnect());
 
@@ -35,13 +45,15 @@ TEST(CalculatePrice, AveragePrice)
    std::vector<double> mockPrices = {50, 200, 300, 400, 1000};
    double expectedAvgPrice = 390;
 
+   InSequence s;
    MockPriceDatabaseAPI api = MockPriceDatabaseAPI("172.0.0.1", "5000");
+
    EXPECT_CALL(api, connect());
-   EXPECT_CALL(api, disconnect());
    for (int i = 0; i < dates.size(); i++)
    {
       EXPECT_CALL(api, GetPrice(itemid, dates[i])).WillOnce(testing::Return(mockPrices[i]));
    }
+   EXPECT_CALL(api, disconnect());
 
    InflationTracker myTracker(&api);
    double avg = myTracker.GetAveragePrice(itemid, dates);
@@ -57,12 +69,14 @@ TEST(CalculatePrice, MaximumPrice)
    double expectedMaxPrice = 5000;
 
    MockPriceDatabaseAPI api = MockPriceDatabaseAPI("172.0.0.1", "5000");
+
+   InSequence s;
    EXPECT_CALL(api, connect());
-   EXPECT_CALL(api, disconnect());
    for (int i = 0; i < dates.size(); i++)
    {
       EXPECT_CALL(api, GetPrice(itemid, dates[i])).WillOnce(testing::Return(mockPrices[i]));
    }
+   EXPECT_CALL(api, disconnect());
 
    InflationTracker myTracker(&api);
    double max = myTracker.GetMaximumPrice(itemid, dates);
@@ -77,13 +91,14 @@ TEST(CalculatePrice, MedianPrice_EvenSet)
    std::vector<double> mockPrices = {50, 200, 300, 400, 5000};
    double expectedMaxPrice = 5000;
 
+   InSequence s;
    MockPriceDatabaseAPI api = MockPriceDatabaseAPI("172.0.0.1", "5000");
    EXPECT_CALL(api, connect());
-   EXPECT_CALL(api, disconnect());
    for (int i = 0; i < dates.size(); i++)
    {
       EXPECT_CALL(api, GetPrice(itemid, dates[i])).WillOnce(testing::Return(mockPrices[i]));
    }
+   EXPECT_CALL(api, disconnect());
 
    InflationTracker myTracker(&api);
    double max = myTracker.GetMaximumPrice(itemid, dates);
@@ -99,13 +114,14 @@ TEST(CalculatePrice, MedianPrice_OddSet)
    std::vector<double> mockPrices = {50, 200, 300, 400, 5000};
    double expectedMedianPrice = 300;
 
+   InSequence s;
    MockPriceDatabaseAPI api = MockPriceDatabaseAPI("172.0.0.1", "5000");
    EXPECT_CALL(api, connect());
-   EXPECT_CALL(api, disconnect());
    for (int i = 0; i < dates.size(); i++)
    {
       EXPECT_CALL(api, GetPrice(itemid, dates[i])).WillOnce(testing::Return(mockPrices[i]));
    }
+   EXPECT_CALL(api, disconnect());
 
    InflationTracker myTracker(&api);
    double median = myTracker.GetMedianPrice(itemid, dates);
